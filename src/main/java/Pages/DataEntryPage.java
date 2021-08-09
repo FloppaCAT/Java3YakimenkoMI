@@ -6,6 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import io.qameta.allure.Step;
+
+import java.util.HashMap;
 
 public class DataEntryPage extends BasePage {
 
@@ -60,13 +63,8 @@ public class DataEntryPage extends BasePage {
     @FindBy(xpath = "//BUTTON[@class='btn btn-primary page__btn']")
     public WebElement pushButton;
 
-
-    public DataEntryPage(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-        this.driver = driver;
-    }
-
-    public void fillField(String fieldName, String value) {
+    @Step("Поле {0} заполнено значением {1}")
+    public DataEntryPage fillField(String fieldName, String value) {
         switch (fieldName) {
             case "Фамилия":
                 fillField(lastName, value);
@@ -76,6 +74,11 @@ public class DataEntryPage extends BasePage {
                 break;
             case "Дата рождения":
                 fillField(birthdate, value);
+                target1.click();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ignore) {
+                }
                 break;
             case "Фамилия 1":
                 fillField(lastName1, value);
@@ -88,6 +91,11 @@ public class DataEntryPage extends BasePage {
                 break;
             case "Дата рождения 1":
                 fillField(birthdate1, value);
+                target2.click();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ignore) {
+                }
                 break;
             case "Серия паспорта":
                 fillField(passportSeries, value);
@@ -97,6 +105,11 @@ public class DataEntryPage extends BasePage {
                 break;
             case "Дата выдачи":
                 fillField(documentDate, value);
+                target3.click();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ignore) {
+                }
                 break;
             case "Кем выдан":
                 fillField(documentIssue, value);
@@ -104,9 +117,31 @@ public class DataEntryPage extends BasePage {
             default:
                 throw new AssertionError("Поле '" + fieldName + "' не объявлено на странице");
         }
+        Assert.assertEquals(value, getFillField(fieldName));
+        return this;
     }
 
-    public String getFillField(String fieldName) {
+    //    @Step("Заполняются поля")
+//    public void fillField(HashMap<String,String> fields){
+//        fields.forEach(this::fillField);
+//    }
+    @Step("Выбор мужского пола")
+    public DataEntryPage chooseGenderMan() {
+        chooseGender.click();
+        return this;
+    }
+
+    @Step("Нажата кнопка \"Продолжить\"")
+    public DataEntryPage clickPushButton() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ignore) {
+        }
+        pushButton.click();
+        return this;
+    }
+
+    private String getFillField(String fieldName) {
         switch (fieldName) {
             case "Фамилия":
                 return lastName.getAttribute("value");
@@ -134,14 +169,13 @@ public class DataEntryPage extends BasePage {
         throw new AssertionError("Поле не объявлено на странице");
     }
 
-    public void errorMessage(String errorMessage) {
+    @Step("Проверить наличие ошибки")
+    public DataEntryPage checkErrorMessage(String errorMessage) {
         String xpath = "//div[@class='alert-form alert-form-error']";
         String actualValue = driver.findElement(By.xpath(xpath)).getText();
         Assert.assertTrue(String.format("Получено значение [%s]. Ожидалось [%s]", actualValue, errorMessage),
                 actualValue.contains(errorMessage));
-
-
-
+        return this;
     }
 }
 
