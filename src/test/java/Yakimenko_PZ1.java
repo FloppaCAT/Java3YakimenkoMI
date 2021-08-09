@@ -13,28 +13,22 @@ public class Yakimenko_PZ1 extends BaseTest {
     public void Sber1() throws InterruptedException {
         driver.get(baseUrl);
         //2
-        driver.findElement(By.xpath("//div[contains(@class,'kitt-content')]//a[contains(@onclick,'kitt-top-menu-8')]")).click();
+        driver.findElement(By.xpath("//div[@class='kitt-content']//a[contains(@onclick,'kitt-top-menu-8')][contains(text(),'Страхование')]")).click();
         //3
-        driver.findElement(By.xpath("//div[@class='kitt-content']//a[contains(@class,'kitt-top-menu__link')][text()='Все страховые программы']")).click();
+        driver.findElement(By.xpath("//div[@class='kitt-content']//a[contains(@class,'kitt-t')][text()='Путешествия']")).click();
         //4
-        //я использовал прокрутку страницы, чтобы элемент стал видимым в пределах барузера, иначе не кликалось
-        Thread.sleep(1000);
-        WebElement findElem = driver.findElement(By.xpath("//H3[@class='uc-full__header'][text()='Страхование для путешественников']"));
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        jse.executeScript("arguments[0].scrollIntoView(true);",findElem);
-
-        driver.findElement(By.xpath("//H3[@class='uc-full__header'][text()='Страхование для путешественников']")).click();
-        //5
+        driver.findElement(By.xpath("//button[@class='kitt-cookie-warning__close'][text()='Закрыть']")).click();
+        //проверка совпадения названия
         WebElement title = driver.findElement(By.xpath("//H1[contains(@class,'kitt-heading')][text()='Страхование путешественников']"));
         Assert.assertEquals("Страхование путешественников", title.getText());
-        //6
-        driver.findElement(By.xpath("//div[contains(@class,'kitt-row')]//SPAN[@class='kitt-button__text'][text()='Оформить онлайн']")).click();
-        //7 и 8
+        //нажата кнопка Оформить онлайн
+        driver.findElement(By.xpath("//SPAN[@class='kitt-button__text'][text()='Оформить онлайн']")).click();
+        //выбран тариф - минимальный
         driver.findElement(By.xpath("(//DIV[@_ngcontent-c11=''])[1]")).click();
-        Thread.sleep(500);
-        driver.findElement(By.xpath("//BUTTON[@class='btn btn-primary btn-large'][text()='Оформить']")).click();
+        //Нажата кнопка - оформить
+        Thread.sleep(1000);
+        driver.findElement(By.xpath("//BUTTON[@class='btn large'][text()='Оформить']")).click();
 
-        //9
         sendText(By.id("surname_vzr_ins_0"), "Иванов");
         sendText(By.id("name_vzr_ins_0"), "Иван");
         sendText(By.id("birthDate_vzr_ins_0"), "03031996");
