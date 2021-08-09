@@ -22,8 +22,8 @@ public class Hooks {
             driver.get(baseUrl);
         }
 
-        @After
-        public void clearData() {
-            driver.quit();
-        }
+//        @After
+//        public void clearData() {
+//            driver.quit();
+//        }
     }

@@ -11,7 +11,7 @@ public class PreparationPage extends BasePage{
     @FindBy(xpath = "(//DIV[@_ngcontent-c11=''])[1]")
     public WebElement selectInsuranceTarifMin;
 
-    @FindBy(xpath = "//BUTTON[@class='btn large'][text()='Оформить']")
+    @FindBy(xpath = "//BUTTON[@class='btn btn-primary btn-large'][text()='Оформить']")
     public WebElement applyButton;
 
     @Step("Выполнено нажатие на карточку - Минимальная")

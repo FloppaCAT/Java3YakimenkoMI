@@ -27,7 +27,7 @@ public class Yakimenko_PZ1 extends BaseTest {
         driver.findElement(By.xpath("(//DIV[@_ngcontent-c11=''])[1]")).click();
         //Нажата кнопка - оформить
         Thread.sleep(1000);
-        driver.findElement(By.xpath("//BUTTON[@class='btn large'][text()='Оформить']")).click();
+        driver.findElement(By.xpath("//BUTTON[@class='btn btn-primary btn-large'][text()='Оформить']")).click();
 
         sendText(By.id("surname_vzr_ins_0"), "Иванов");
         sendText(By.id("name_vzr_ins_0"), "Иван");

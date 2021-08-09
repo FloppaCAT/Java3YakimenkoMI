@@ -8,7 +8,7 @@ import io.qameta.allure.Step;
 
 public class MainPage extends BasePage{
 
-
+    @FindBy(xpath = "//div[@class='kitt-content']")
     WebElement menuItems;
 
     @FindBy(xpath = "//div[@class='kitt-content']")
